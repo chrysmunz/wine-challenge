@@ -7,7 +7,8 @@ export default {
   gray: {
     primary: '#EAEAEA',
     secondary: '#888888',
-    tertiary: '555555',
-    darker: '#111111'
+    tertiary: '#555555',
+    darker: '#111111',
+    background: '#DEDEDE'
   }
 } as const;
