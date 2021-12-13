@@ -25,6 +25,7 @@ const StyledProduct = styled.TouchableOpacity`
     border-radius: 4px;
     align-items: center;
     justify-content: center;
+    margin-bottom: 8px;
   `}
 `;
 
