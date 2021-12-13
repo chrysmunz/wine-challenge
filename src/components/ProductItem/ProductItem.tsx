@@ -14,6 +14,7 @@ const StyledContainer = styled.View`
   width: 156px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 24px;
 `;
 
 const StyledProduct = styled.TouchableOpacity`
