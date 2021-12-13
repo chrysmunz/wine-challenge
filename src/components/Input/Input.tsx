@@ -10,7 +10,7 @@ interface InputProps extends TextInputProps {
 
 const StyledContainer = styled.View`
   ${({ theme }) => css`
-    background-color: ${theme.color.gray}
+    background-color: ${theme.color.gray.primary}
     width: 100%;
     height: 40px;
     flex-direction: row;
