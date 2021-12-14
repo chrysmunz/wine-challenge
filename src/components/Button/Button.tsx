@@ -25,6 +25,7 @@ const StyledText = styled.Text`
   ${({ theme }) => css`
     font-weight: ${theme.typography.weight.bold};
     font-size: ${theme.typography.size.h3};
+    line-height: 16px;
     color: ${theme.color.white}
   `}
 `;
