@@ -2,7 +2,6 @@ export default {
   white: '#FFFFFF',
   black: '#000000',
   green: '#7EBC43',
-  orange: '#F79552',
   pink: '#C81A78',
   gray: {
     primary: '#EAEAEA',
@@ -10,5 +9,9 @@ export default {
     tertiary: '#555555',
     darker: '#111111',
     background: '#DEDEDE'
-  }
+  },
+  orange: {
+    primary: '#F79552',
+    light: '#F9B950'
+  },
 } as const;

@@ -8,7 +8,7 @@ interface DiscountProps extends TextProps {
 
 const StyledContainer = styled.View`
   ${({ theme }) => css`
-    background-color: ${theme.color.orange}
+    background-color: ${theme.color.orange.primary}
     padding-horizontal: 8px;
     padding-vertical: 0.1px;
     align-items: center;

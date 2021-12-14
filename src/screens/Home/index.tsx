@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, RefreshControl } from 'react-native';
 
 import { getProducts, selectProducts } from '../../store/Products.store';
-import { Input, ProductItem } from '../../components';
+import { Header, Input, ProductItem } from '../../components';
 import { Total } from '../../components/Text';
 
 const StyledContainer = styled.View`
@@ -46,38 +46,41 @@ const Home: React.FC = () => {
   };
 
   return (
-    <StyledContainer>
-      <Input
-        value={value}
-        placeholder='O que você está procurando?'
-        onChangeText={text => setValue(text)}
-        onSubmitEditing={() => loadProducts()}
-      />
-      <Total loading={products.length === 0}>{count}</Total>
-      {products.length > 0 ?
-        <>
-          <StyledProductList
-            numColumns={2}
-            data={products}
-            showsVerticalScrollIndicator={false}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
-            onEndReachedThreshold={0.5}
-            onEndReached={() => loadMoreProducts()}
-            refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={() => loadProducts()}
-              />
-            }
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => (
-              <ProductItem product={item} />
-            )}
-          />
-          {isFetchingProducts ? <ActivityIndicator size='large' /> : null}
-        </> : null
-      }
-    </StyledContainer>
+    <>
+      <Header total={3} />
+      <StyledContainer>
+        <Input
+          value={value}
+          placeholder='O que você está procurando?'
+          onChangeText={text => setValue(text)}
+          onSubmitEditing={() => loadProducts()}
+        />
+        <Total loading={products.length === 0}>{count}</Total>
+        {products.length > 0 ?
+          <>
+            <StyledProductList
+              numColumns={2}
+              data={products}
+              showsVerticalScrollIndicator={false}
+              columnWrapperStyle={{ justifyContent: 'space-between' }}
+              onEndReachedThreshold={0.5}
+              onEndReached={() => loadMoreProducts()}
+              refreshControl={
+                <RefreshControl
+                  refreshing={false}
+                  onRefresh={() => loadProducts()}
+                />
+              }
+              keyExtractor={(_, index) => index.toString()}
+              renderItem={({ item }) => (
+                <ProductItem product={item} />
+              )}
+            />
+            {isFetchingProducts ? <ActivityIndicator size='large' /> : null}
+          </> : null
+        }
+      </StyledContainer>
+    </>
   );
 };
 
