@@ -1,15 +1,16 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import { selectCart } from '../../store/Cart.store';
 import logo from '../../assets/images/logo.png';
 import cart from '../../assets/images/cart.png';
 
 type Status = 'default' | 'back';
 interface HeaderProps {
   status?: Status;
-  total: number;
 }
 
 const StyledContainer = styled.View<HeaderProps>`
@@ -76,11 +77,13 @@ const StyledTotal = styled.Text`
   `}
 `;
 
-const Header: React.ElementType<HeaderProps> = ({ status, total }: HeaderProps) => {
+const Header: React.ElementType<HeaderProps> = ({ status }: HeaderProps) => {
   const navigation = useNavigation();
 
+  const { countCart } = useSelector(selectCart);
+
   return (
-    <StyledContainer status={status} total={total}>
+    <StyledContainer status={status}>
       {status === 'default' ? (
         <StyledLogo source={logo} />
       ) : (
@@ -91,7 +94,7 @@ const Header: React.ElementType<HeaderProps> = ({ status, total }: HeaderProps) 
       <StyledContainerCart>
         <StyledIcon source={cart} />
         <StyledTotalItems>
-          <StyledTotal>{total}</StyledTotal>
+          <StyledTotal>{countCart}</StyledTotal>
           </StyledTotalItems>
       </StyledContainerCart>
     </StyledContainer>

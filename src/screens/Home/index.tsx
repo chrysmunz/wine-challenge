@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, RefreshControl } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { add, setCart } from '../../store/Cart.store';
 import { getProducts, selectProducts } from '../../store/Products.store';
 import { Header, Input, ProductItem } from '../../components';
 import { Total } from '../../components/Text';
@@ -25,16 +27,30 @@ const StyledProductList = styled.FlatList`
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
   const limit = 20;
 
   const { products, count, isFetching: isFetchingProducts } = useSelector(selectProducts);
 
   const loadProducts = () => {
+    setLoading(true);
+
     dispatch(getProducts({ start: 1, limit, name: value }));
+
+    setTimeout(() => setLoading(false), 3000);
+  };
+
+  const getCart = async () => {
+    const cart = await AsyncStorage.getItem('@cart');
+
+    if (cart) {
+      dispatch(setCart(JSON.parse(cart)));
+    }
   };
 
   useEffect(() => {
     loadProducts();
+    getCart();
   }, []);
 
   const loadMoreProducts = () => {
@@ -47,7 +63,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Header total={3} />
+      <Header />
       <StyledContainer>
         <Input
           value={value}
@@ -63,7 +79,7 @@ const Home: React.FC = () => {
               data={products}
               showsVerticalScrollIndicator={false}
               columnWrapperStyle={{ justifyContent: 'space-between' }}
-              onEndReachedThreshold={0.5}
+              onEndReachedThreshold={0.1}
               onEndReached={() => loadMoreProducts()}
               refreshControl={
                 <RefreshControl
@@ -73,10 +89,10 @@ const Home: React.FC = () => {
               }
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item }) => (
-                <ProductItem product={item} />
+                <ProductItem product={item} onPress={() => dispatch(add(item))} />
               )}
             />
-            {isFetchingProducts ? <ActivityIndicator size='large' /> : null}
+            {!loading && isFetchingProducts ? <ActivityIndicator size='small' /> : null}
           </> : null
         }
       </StyledContainer>

@@ -50,7 +50,7 @@ const StyledMemberArea = styled.View`
   margin-bottom: 4.09px;
 `;
 
-const ProductItem: React.ElementType<ProductItemsProps> = ({ product }: ProductItemsProps) => {
+const ProductItem: React.ElementType<ProductItemsProps> = ({ product, onPress }: ProductItemsProps) => {
   const navigation = useNavigation();
 
   return (
@@ -68,7 +68,9 @@ const ProductItem: React.ElementType<ProductItemsProps> = ({ product }: ProductI
         </StyledMemberArea>
         <Price status='no-member'>{product.priceNonMember.toFixed(2).replace('.', ',')}</Price>
       </StyledProduct>
-      <Button>Adicionar</Button>
+      <Button onPress={onPress}>
+        Adicionar
+      </Button>
     </StyledContainer>
   );
 };

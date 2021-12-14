@@ -1,7 +1,9 @@
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 
+import { add } from '../../store/Cart.store';
 import { Button, Header } from '../../components';
 import { Body, Description, Discount, Price, Subtitle, Title } from '../../components/Text';
 
@@ -61,11 +63,12 @@ const StyledContainerButton = styled.View`
 
 const Product: React.FC = () => {
   const routes = useRoute();
+  const dispatch = useDispatch();
   const { product } = routes.params;
 
   return (
     <>
-      <Header status='back' total={3} />
+      <Header status='back' />
       <StyledContainer>
         <StyledProductDetails>
           <StyledImage source={{ uri: product.image }} />
@@ -87,7 +90,9 @@ const Product: React.FC = () => {
           <Price status='no-member'>{product.priceNonMember.toFixed(2).replace('.', ',')}</Price>
         </StyledPrices>
         <StyledContainerButton>
-          <Button>Adicionar</Button>
+          <Button onPress={() => dispatch(add(product))}>
+            Adicionar
+          </Button>
         </StyledContainerButton>
       </StyledFooter>
     </>
