@@ -3,6 +3,7 @@ import { TextProps } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 interface TotalProps extends TextProps {
+  loading: boolean;
   children: JSX.Element | string | number;
 }
 
@@ -21,9 +22,9 @@ const StyledTotal = styled.Text`
   `}
 `;
 
-const Name: React.ElementType<TotalProps> = ({ children }: TotalProps) => (
+const Name: React.ElementType<TotalProps> = ({ loading, children }: TotalProps) => (
   <StyledContainer>
-    <StyledTotal>{children} produtos encontrados</StyledTotal>
+    <StyledTotal>{loading ? 'Carregando produtos...' : `${children} produtos encontrados`}</StyledTotal>
   </StyledContainer>
 );
 

@@ -15,15 +15,16 @@ type ProductsSlice = {
 
 const getProducts = createAsyncThunk(
   'Products/getProducts',
-  async (params: { start?: number; limit?: number }, thunkAPI) => {
+  async (params: { start?: number; limit?: number, name?: string }, thunkAPI) => {
     try {
       const { data } = await api.get(
-        `products?${params.limit ? `&limit=${params.limit}` : ''}${
-          params.start ? `&start=${params.start}` : ''
-        }`
+        `products?${params.start && !params.name ? `page=${params.start}` : ''}
+        ${params.limit && !params.name ? `&limit=${params.limit}` : ''}
+        ${params.name ? `&name=${params.name}` : ''}
+        `
       );
 
-      return data;
+      return { count: data.totalItems, products: data.items, start: params.start};
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.response.data);
     }
@@ -48,8 +49,8 @@ const productsSlice = createSlice({
     [getProducts.fulfilled]: (state: ProductsSlice, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
-      state.products = payload.items;
-      state.count = payload.totalItems;
+      state.products = !payload.start ? [...payload.products] : [...state.products, ...payload.products];
+      state.count = payload.count;
     },
     [getProducts.rejected]: (state: ProductsSlice, { payload }) => {
       state.isFetching = false;
