@@ -21,8 +21,6 @@ const StyledPrice = styled.Text<PriceProps>`
       return theme.typography.size.price
     }};
     line-height: 17px;
-    align-items: center;
-    text-align: center;
     text-decoration: ${status === 'default' ? 'line-through' : 'none'};
     color: ${() => {
       if (status === 'member') {

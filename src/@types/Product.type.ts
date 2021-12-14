@@ -8,7 +8,7 @@ interface Product {
   priceNonMember: number,
   type: string,
   classification: string,
-  size: string,
+  volume: string,
   rating: number,
   avaliations: number,
   country: string,

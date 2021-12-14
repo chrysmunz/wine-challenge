@@ -13,8 +13,8 @@ interface HeaderProps {
 }
 
 const StyledContainer = styled.View<HeaderProps>`
-  ${({ theme }) => css`
-    background-color: ${theme.color.white};
+  ${({ theme, status }) => css`
+    background-color: ${status === 'back' ? theme.color.gray.background : theme.color.white};
     width: 100%;
     height: 66px;
     padding: 24px;
@@ -80,7 +80,7 @@ const Header: React.ElementType<HeaderProps> = ({ status, total }: HeaderProps) 
   const navigation = useNavigation();
 
   return (
-    <StyledContainer total={total}>
+    <StyledContainer status={status} total={total}>
       {status === 'default' ? (
         <StyledLogo source={logo} />
       ) : (

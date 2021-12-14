@@ -19,6 +19,8 @@ export default {
     h3: '16px',
     h4: '14px',
     h5: '12px',
-    price: '10px'
+    price: '10px',
+    title: '18px',
+    description: '20px'
   }
 } as const;
