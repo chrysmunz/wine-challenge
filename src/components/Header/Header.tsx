@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -76,12 +77,14 @@ const StyledTotal = styled.Text`
 `;
 
 const Header: React.ElementType<HeaderProps> = ({ status, total }: HeaderProps) => {
+  const navigation = useNavigation();
+
   return (
     <StyledContainer total={total}>
       {status === 'default' ? (
         <StyledLogo source={logo} />
       ) : (
-        <StyledButton>
+        <StyledButton onPress={() => navigation.goBack()}>
           <Icon name='chevron-left' size={20} />
         </StyledButton>
       )}

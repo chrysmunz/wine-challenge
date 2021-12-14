@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styled, { css } from 'styled-components/native';
 
 import { Product } from '../../@types';
@@ -49,23 +50,27 @@ const StyledMemberArea = styled.View`
   margin-bottom: 4.09px;
 `;
 
-const ProductItem: React.ElementType<ProductItemsProps> = ({ product, onPress }: ProductItemsProps) => (
-  <StyledContainer>
-    <StyledProduct onPress={onPress}>
-      <StyledImage source={{ uri: product.image }} />
-      <Name>{product.name}</Name>
-      <StyledDiscountArea>
-        <Price>{product.price.toFixed(2).replace('.', ',')}</Price>
-        <Discount>{product.discount}</Discount>
-      </StyledDiscountArea>
-      <StyledMemberArea>
-        <Member />
-        <Price status='member'>{product.priceMember.toFixed(2).replace('.', ',')}</Price>
-      </StyledMemberArea>
-      <Price status='no-member'>{product.priceNonMember.toFixed(2).replace('.', ',')}</Price>
-    </StyledProduct>
-    <Button>Adicionar</Button>
-  </StyledContainer>
-);
+const ProductItem: React.ElementType<ProductItemsProps> = ({ product }: ProductItemsProps) => {
+  const navigation = useNavigation();
+
+  return (
+    <StyledContainer>
+      <StyledProduct onPress={() => navigation.navigate('Product', { product })}>
+        <StyledImage source={{ uri: product.image }} />
+        <Name>{product.name}</Name>
+        <StyledDiscountArea>
+          <Price>{product.price.toFixed(2).replace('.', ',')}</Price>
+          <Discount>{product.discount}</Discount>
+        </StyledDiscountArea>
+        <StyledMemberArea>
+          <Member />
+          <Price status='member'>{product.priceMember.toFixed(2).replace('.', ',')}</Price>
+        </StyledMemberArea>
+        <Price status='no-member'>{product.priceNonMember.toFixed(2).replace('.', ',')}</Price>
+      </StyledProduct>
+      <Button>Adicionar</Button>
+    </StyledContainer>
+  );
+};
 
 export default ProductItem;
