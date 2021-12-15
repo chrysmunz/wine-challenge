@@ -6,6 +6,7 @@ import { RootState } from '.';
 type Product = {
   id: number;
   name: string;
+  image: string;
   price: number;
   total: number;
 }
@@ -42,6 +43,7 @@ const cartSlice = createSlice({
         state.productsCart = [...state.productsCart, {
           id: payload.id,
           name: payload.name,
+          image: payload.image,
           price: payload.price,
           total: 1
         }];
@@ -52,6 +54,7 @@ const cartSlice = createSlice({
           state.productsCart = [...state.productsCart, {
             id: payload.id,
             name: payload.name,
+            image: payload.image,
             price: payload.price,
             total: 1
           }];
