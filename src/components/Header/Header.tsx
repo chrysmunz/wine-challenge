@@ -8,14 +8,14 @@ import { selectCart } from '../../store/Cart.store';
 import logo from '../../assets/images/logo.png';
 import cart from '../../assets/images/cart.png';
 
-type Status = 'default' | 'back';
+type Status = 'default' | 'back' | 'cart';
 interface HeaderProps {
   status?: Status;
 }
 
 const StyledContainer = styled.View<HeaderProps>`
   ${({ theme, status }) => css`
-    background-color: ${status === 'back' ? theme.color.gray.background : theme.color.white};
+    background-color: ${status !== 'default' ? theme.color.gray.background : theme.color.white};
     width: 100%;
     height: 66px;
     padding: 24px;
@@ -39,7 +39,7 @@ const StyledIcon = styled.Image`
 
 const StyledButton = styled.TouchableOpacity``;
 
-const StyledContainerCart = styled.View`
+const StyledContainerCart = styled.TouchableOpacity`
   ${({ theme }) => css`
     background-color: ${theme.color.orange.light};
     align-items: center;
@@ -77,6 +77,17 @@ const StyledTotal = styled.Text`
   `}
 `;
 
+const StyledTitle = styled.Text`
+  ${({ theme }) => css`
+    width: 100%;
+    font-weight: ${theme.typography.weight.bold};
+    font-size: ${theme.typography.size.h3};
+    line-height: 16px;
+    text-align: center;
+    color: ${theme.color.black};
+  `}
+`;
+
 const Header: React.ElementType<HeaderProps> = ({ status }: HeaderProps) => {
   const navigation = useNavigation();
 
@@ -91,12 +102,21 @@ const Header: React.ElementType<HeaderProps> = ({ status }: HeaderProps) => {
           <Icon name='chevron-left' size={20} />
         </StyledButton>
       )}
-      <StyledContainerCart>
-        <StyledIcon source={cart} />
-        <StyledTotalItems>
-          <StyledTotal>{countCart}</StyledTotal>
+      {status !== 'cart' ?
+        <StyledContainerCart onPress={() => navigation.navigate('Cart')}>
+          <StyledIcon source={cart} />
+          <StyledTotalItems>
+            <StyledTotal>{countCart}</StyledTotal>
           </StyledTotalItems>
-      </StyledContainerCart>
+        </StyledContainerCart> : null
+      }
+      {status === 'cart' ?
+        <StyledTitle>
+          Carrinho {countCart === 1 ?
+          `(${countCart} item)` : null}
+          {countCart > 1 ?
+          `(${countCart} itens)` : null}
+        </StyledTitle> : null}
     </StyledContainer>
   );
 };
