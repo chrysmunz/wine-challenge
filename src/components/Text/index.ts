@@ -1,0 +1,9 @@
+export { default as Body } from './Body';
+export { default as Description } from './Description';
+export { default as Discount } from './Discount';
+export { default as Member } from './Member';
+export { default as Name } from './Name';
+export { default as Price } from './Price';
+export { default as Subtitle } from './Subtitle';
+export { default as Title } from './Title';
+export { default as Total } from './Total';

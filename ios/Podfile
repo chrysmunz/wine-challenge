@@ -12,6 +12,10 @@ target 'wine' do
     :hermes_enabled => false
   )
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+
   target 'wineTests' do
     inherit! :complete
     # Pods for testing
