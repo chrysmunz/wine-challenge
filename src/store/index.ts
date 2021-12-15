@@ -7,7 +7,11 @@ const store = configureStore({
   reducer: {
     products: productReducer,
     cart: cartReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    immutableCheck: { ignoredPaths: ['some.nested.path'] },
+    serializableCheck: { ignoredPaths: ['some.nested.path'] }
+  })
 });
 
 export type RootState = ReturnType<typeof store.getState>;

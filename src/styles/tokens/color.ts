@@ -3,6 +3,7 @@ export default {
   black: '#000000',
   green: '#7EBC43',
   pink: '#C81A78',
+  blue: '#0077b6',
   gray: {
     primary: '#EAEAEA',
     secondary: '#888888',
