@@ -1,7 +1,10 @@
 import React from 'react';
 import { TouchableOpacityProps } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styled, { css } from 'styled-components/native';
+
+import { add, remove, removeAll } from '../../store/Cart.store';
 
 type Product = {
   name: string;
@@ -90,6 +93,8 @@ const StyledContainerItem = styled.View``;
 const Button = styled.TouchableOpacity``;
 
 const CartItem: React.ElementType<CartItemProps> = ({ product }: CartItemProps) => {
+  const dispatch = useDispatch();
+
   return (
     <StyledContainer>
       <StyledImage source={{ uri: product.image }} />
@@ -98,18 +103,18 @@ const CartItem: React.ElementType<CartItemProps> = ({ product }: CartItemProps) 
           <StyledContainerName>
             <StyledName>{product.name}</StyledName>
           </StyledContainerName>
-          <Button>
+          <Button onPress={() => dispatch(removeAll(product))}>
             <Icon name='trash' size={20} />
           </Button>
         </StyledProductDetails>
         <StyledContainerButton>
           <StyledPrice>R$ {(product.price * product.total).toFixed(2).replace('.', ',')}</StyledPrice>
           <StyledContainerQuantity>
-            <Button>
+            <Button onPress={() => dispatch(remove(product))}>
               <Icon name='minus' size={24} />
             </Button>
             <StyledTotal>{product.total}</StyledTotal>
-            <Button>
+            <Button onPress={() => dispatch(add(product))}>
               <Icon name='plus' size={24} />
             </Button>
           </StyledContainerQuantity>

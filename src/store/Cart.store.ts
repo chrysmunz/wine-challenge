@@ -72,13 +72,48 @@ const cartSlice = createSlice({
         );
       }
     },
-    remove: (state: CartSlice) => {
+    remove: (state: CartSlice, { payload }) => {
+      state.totalCart -= payload.price;
+      state.countCart -= 1;
+
+      const index = state.productsCart.findIndex((item => item.id === payload.id));
+
+      if (state.productsCart[index].total === 1) {
+        const newProductsState = state.productsCart.filter(item => item.id !== payload.id);
+        state.productsCart = newProductsState;
+      } else {
+        state.productsCart[index].total -= 1;
+      }
+
+      AsyncStorage.setItem('@cart',
+        JSON.stringify({
+          productsCart: state.productsCart,
+          totalCart: state.totalCart,
+          countCart: state.countCart
+        })
+      );
+    },
+    removeAll: (state: CartSlice, { payload }) => {
+      state.totalCart -= payload.price * payload.total;
+      state.countCart -= payload.total;
+
+      const newProductsState = state.productsCart.filter(item => item.id !== payload.id);
+
+      state.productsCart = newProductsState;
+
+      AsyncStorage.setItem('@cart',
+        JSON.stringify({
+          productsCart: state.productsCart,
+          totalCart: state.totalCart,
+          countCart: state.countCart
+        })
+      );
     }
   },
   extraReducers: {}
 });
 
-export const { add, remove, clearState, setCart } = cartSlice.actions;
+export const { add, remove, removeAll, clearState, setCart } = cartSlice.actions;
 
 const selectCart = (state: RootState): CartSlice => state.cart;
 

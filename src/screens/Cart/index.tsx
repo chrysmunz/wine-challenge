@@ -51,7 +51,7 @@ const StyledText = styled.Text`
 `;
 
 const Cart: React.FC = () => {
-  const { productsCart, totalCart, countCart } = useSelector(selectCart);
+  const { productsCart, totalCart } = useSelector(selectCart);
 
   return (
     <>
